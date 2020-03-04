@@ -1,0 +1,59 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage[left=1in, right=1in, top=1in, bottom=1in]{geometry}
+\usepackage{/Users/efearas/Desktop/format}
+\title{\textbf{Finding the constant}}
+\author{Efe Aras }
+\date{}
+\begin{document}
+\maketitle
+
+We have
+
+\[ \inf_\Pi th(X) + \bar{t} h(Z) + \lambda I(X;Z) - d  h(X + Z) \leq C(c, d, \lambda) \]
+
+which comes from rearranging
+
+\begin{align*}
+	\inf_\Pi (c_1  h(\frac{X}{c_1}) + c_2  h(\frac{Z}{c_2}) - d h(X + Z) - \lambda h(X, Z) \leq D(\{c_1, c_2\}, \{1, \lambda \}, \{ [1 ,1], [1, 0; 0 ,1] \} )	
+\end{align*}
+
+We note that we need to satisfy $c_1 + c_2 = d + 2 \lambda$ to be a valid datum. 
+
+We will pick $d = 1$ case for now. We note that due to the forms we will choose, the final coefficients $t$ and $\bar{t}$  will be partitioning $d$, so I don't think much is lost when we pick this specific case. 
+
+where we note that \[ D = D_g := \frac{1}{2} \sup ( \log |u_1| + \lambda \log \det U_2 - c_1 \log |v_1| - c_2 \log |v_2|)  \]  
+
+where $U_j, V_i$ satisfy:
+
+\[  (c_1 x_1 + c_2 x_2)^2  u_1 + \lambda [c_1 x_1, c_2 x_2]  U_2 [c_1 x_1, c_2 x_2] \leq c_1^2 v_1 x_1^2 + c_2^2 v_2 x_2^2  \]
+
+Finding the maximizer here seems hard to compute.
+
+So we are instead going to assume that there is a Gaussian coupling that achieves this bound, and just going to try to find the particular Gaussian with the given marginals. Let's start with the case where $X$ has variance 1, $Z$ has variance $\sigma^2$, and $X$ and $Z$ havecovariance $c$. We will try to maximize the entropy bound over all possible values of $c$. We note that $X + Z$ has variance $1 + \sigma^2 - c$. We want to maximize
+
+\[ \sum \lambda h(X, Z) + h(X + Z)\] which gives us \[ \frac{\lambda}{2} \log ((2 \pi e)^2 (\sigma^2 - c^2)) + \frac{1}{2} \log (2 \pi e (1 + \sigma^2 - c)) \]
+
+For now, let us specialize to the case $\sigma^2 = 1$. We definitely need to do the general case and then optimize over the $\sigma$ to get the right bound. (Note that WLOG we can choose $\sigma^2 \leq 1$ since scaling should be invariant by the dimension condition and the problem is essentially symmetric in the two variables, so if there is a maximizer $(\alpha, 1)$, there has to be a maximizer $(1, \alpha)$.) 
+
+which, when optimized over $c$, gives us 
+
+\[ c = \frac{-4 \lambda \pm \sqrt{16 \lambda^2 + 4(2\lambda + 1)} }{-2(2\lambda + 1)} \]
+
+To pick the sign in front of the square root, we need to be somewhat careful, but a heuristic analysis shows that for $\lambda \geq 0$, we pick the positive root (We would normally want to differentiate the original expression a second time to test this) The heuristic we are considering here is mostly taking the limit of $\lambda \rightarrow \infty$, for which we know that we want the $c$ to be 0. We note that this $c$ value is equal to 1 when $\lambda = 0$ if we pick the positive square root, which is also what we want.
+
+So, the net constant we get on the right hand side for $D$ is  
+
+\[ (c_1 + \lambda) \frac{1}{2} \log \frac{2 \pi e}{|c_1|} +   (c_2 + \lambda) \frac{1}{2} \log \frac{2 \pi e}{|c_2|} -  \frac{\lambda}{2} \log ((2 \pi e)^2 (\sigma^2 - c^2)) - \frac{1}{2} \log (2 \pi e (1 + \sigma^2 - c)) \] 
+
+where $c$ was chosen before.
+
+We note that all the factors of $(2 \pi e)2$ actually cancel, and the first two terms will actually completely cancel in the fully correctly scaled version, so we will be left with just the last two terms
+
+\begin{align*}
+	\inf_\Pi (c_1  h(\frac{X}{c_1}) + c_2  h(\frac{Z}{c_2}) - h(X + Z) - \lambda h(X, Z) \leq D(\{c_1, c_2\}, \{1, \lambda \}, \{ [1 ,1], [1, 0; 0 ,1] \} )	
+\end{align*}
+
+We will pick $c_1, c_2 = t + \lambda, \bar{t} + \lambda$
+
+We can also move the denominators of the first two entropies to the constant side since $h(aX) = \log |a| + h(X)$, which gives us the form we want. 
+\end{document}
